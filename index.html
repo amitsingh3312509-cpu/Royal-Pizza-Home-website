@@ -6,179 +6,154 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
-body{
-font-family:Arial;
-background:#f2f2f2;
-}
-
-.box{
-max-width:450px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
-}
-
-h2{
-text-align:center;
-color:red;
-}
-
-label{
-font-weight:bold;
-}
-
-input,select{
-width:100%;
-padding:10px;
-margin:6px 0;
-}
-
-button{
-width:100%;
-padding:12px;
-background:green;
-color:white;
-border:none;
-font-size:16px;
-margin-top:8px;
-}
-
-.info{
-font-size:16px;
-text-align:center;
-color:green;
-}
-
+body{font-family:Arial; background:#f5f5f5;}
+.box{max-width:550px; margin:auto; background:white; padding:20px; border-radius:10px;}
+h2{text-align:center; color:red;}
+input,select{width:100%; padding:10px; margin:6px 0;}
+button{width:100%; padding:12px; background:green; color:white; border:none; margin-top:8px;}
+.cart{background:#f2f2f2; padding:10px; margin-top:10px; border-radius:8px;}
+.info{text-align:center; font-size:18px; color:green;}
+.qr{text-align:center; margin-top:15px;}
 </style>
 </head>
 
 <body>
-
 <div class="box">
 
 <h2>🍕 Royal Pizza Home</h2>
 
-<label>Name / नाम</label>
-<input type="text" id="name">
+<form action="https://formsubmit.co/amitsingh3312509@gmail.com" method="POST" onsubmit="return checkPayment()">
 
-<label>Mobile Number / मोबाइल नंबर</label>
-<input type="number" id="mobile">
+<label>Name / नाम</label>
+<input type="text" name="Name" id="name" required>
+
+<label>Mobile / मोबाइल</label>
+<input type="number" name="Mobile" id="mobile" required>
 
 <label>Village / गाँव</label>
-<input type="text" id="village">
+<input type="text" name="Village" id="village">
 
 <label>Select Pizza / पिज़्ज़ा चुनें</label>
-<select id="pizza" onchange="calculate()">
-
+<select id="pizza">
 <option value="">Select</option>
-
-<option value="20">Margherita Pizza / मार्गेरिटा पिज़्ज़ा ₹20</option>
-<option value="2">Veg Pizza / वेज पिज़्ज़ा ₹2</option>
-<option value="200">Paneer Pizza / पनीर पिज़्ज़ा ₹200</option>
-<option value="250">Farmhouse Pizza / फार्महाउस पिज़्ज़ा ₹250</option>
-
+<option value="150">Margherita Pizza ₹150</option>
+<option value="180">Veg Pizza ₹180</option>
+<option value="200">Paneer Pizza ₹200</option>
+<option value="250">Farmhouse Pizza ₹250</option>
 </select>
 
 <label>Quantity / मात्रा</label>
-<input type="number" id="qty" value="1" min="1" onchange="calculate()">
+<input type="number" id="qty" value="1" min="1">
 
-<label>Piece / Plate</label>
-<select>
-<option>Piece</option>
-<option>Plate</option>
-</select>
+<button type="button" onclick="addCart()">Add To Cart / कार्ट में जोड़ें</button>
 
-<div class="info">
-Date: <span id="date"></span>
-</div>
-
-<div class="info">
-Time: <span id="time"></span>
-</div>
-
-<div class="info">
-Day: <span id="day"></span>
-</div>
-
-<div class="info">
-Receipt No: <span id="receipt"></span>
+<div class="cart">
+<h3>Cart / कार्ट</h3>
+<div id="cart"></div>
 </div>
 
 <div class="info">
 Total ₹ <span id="total">0</span>
 </div>
-
 <div class="info">
 Advance 50% ₹ <span id="advance">0</span>
 </div>
+<div class="info">
+Receipt No : <span id="receipt"></span>
+</div>
+<div class="info">
+Date : <span id="date"></span>
+</div>
+<div class="info">
+Time : <span id="time"></span>
+</div>
+<div class="info">
+Day : <span id="day"></span>
+</div>
 
-<button onclick="payUPI()">Pay Advance / एडवांस पेमेंट</button>
+<input type="hidden" name="TotalAmount" id="totalInput">
+<input type="hidden" name="AdvancePaid" id="advanceInput">
+<input type="hidden" name="ReceiptNo" id="receiptInput">
 
-<a href="tel:7309277213">
-<button type="button">Call / कॉल करें</button>
-</a>
+<button type="button" onclick="pay()">Pay Advance</button>
 
-<a href="https://wa.me/917309277213">
-<button type="button">WhatsApp Order</button>
-</a>
+<div class="qr">
+<p>Click QR To Pay / QR दबाकर भुगतान करें</p>
+<a id="paylink"><img id="qrimg" width="200"></a>
+</div>
+
+<button type="submit">Submit Order / ऑर्डर भेजें</button>
+</form>
+
+<button onclick="downloadReceipt()">Download Receipt</button>
 
 </div>
 
 <script>
+let total=0;
+let paid=false;
 
-function calculate(){
-
-let price=document.getElementById("pizza").value;
+function addCart(){
+let pizza=document.getElementById("pizza");
+let price=pizza.value;
+let name=pizza.options[pizza.selectedIndex].text;
 let qty=document.getElementById("qty").value;
-
-let total=price*qty;
-
+let itemTotal=price*qty;
+if(itemTotal==0){ alert("Select pizza first"); return; }
+total+=itemTotal;
+document.getElementById("cart").innerHTML+=name+" x "+qty+" = ₹"+itemTotal+"<br>";
 document.getElementById("total").innerText=total;
-
 let adv=Math.round(total/2);
-
 document.getElementById("advance").innerText=adv;
-
+document.getElementById("totalInput").value=total;
+document.getElementById("advanceInput").value=adv;
+let upi="upi://pay?pa=7309277213&pn=RoyalPizzaHome&am="+adv+"&cu=INR";
+let qr="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+encodeURIComponent(upi);
+document.getElementById("qrimg").src=qr;
+document.getElementById("paylink").href=upi;
 }
 
-function payUPI(){
-
-let amount=document.getElementById("advance").innerText;
-
-if(amount==0){
-
-alert("Please select pizza first");
-
-return;
-
-}
-
-let upi="upi://pay?pa=7309277213&pn=RoyalPizzaHome&am="+amount+"&cu=INR";
-
+function pay(){
+let adv=document.getElementById("advance").innerText;
+if(adv==0){ alert("Add pizza first"); return; }
+let upi="upi://pay?pa=7309277213&pn=RoyalPizzaHome&am="+adv+"&cu=INR";
 window.location.href=upi;
-
+paid=true;
 }
 
-function setDateTime(){
+function checkPayment(){
+if(!paid){ alert("Please pay advance first / कृपया अग्रिम भुगतान करें"); return false; }
+document.getElementById("receiptInput").value=document.getElementById("receipt").innerText;
+return true;
+}
 
+function setTime(){
 let d=new Date();
-
 document.getElementById("date").innerText=d.toLocaleDateString();
-
 document.getElementById("time").innerText=d.toLocaleTimeString();
-
 document.getElementById("day").innerText=d.toLocaleDateString('en-US',{weekday:'long'});
-
 document.getElementById("receipt").innerText="RP"+Math.floor(Math.random()*100000);
-
 }
 
-setDateTime();
+setTime();
 
+function downloadReceipt(){
+let text="Royal Pizza Receipt\n\n"+
+"Name: "+document.getElementById("name").value+"\n"+
+"Mobile: "+document.getElementById("mobile").value+"\n"+
+"Village: "+document.getElementById("village").value+"\n"+
+"Total: ₹"+total+"\n"+
+"Advance Paid: ₹"+document.getElementById("advance").innerText+"\n"+
+"Receipt No: "+document.getElementById("receipt").innerText+"\n"+
+"Date: "+document.getElementById("date").innerText+"\n"+
+"Time: "+document.getElementById("time").innerText+"\n";
+let blob=new Blob([text],{type:"text/plain"});
+let link=document.createElement("a");
+link.href=URL.createObjectURL(blob);
+link.download="pizza_receipt.txt";
+link.click();
+}
 </script>
 
 </body>
-                      </html>
+  </html>
