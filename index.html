@@ -33,16 +33,21 @@ border:none;border-radius:6px;color:white;
 .add-btn{background:#ff4da6;}
 .submit-btn{background:black;}
 .download{background:#ff4da6;}
+.call-btn{background:#28a745;}
+.whatsapp-btn{background:#25D366;}
 
 .cart{background:#eee;padding:10px;margin-top:10px;}
 
 .note{color:red;text-align:center;font-weight:bold;}
 
-.msg{color:green;text-align:center;font-weight:bold;margin-top:10px;}
+.msg{color:green;text-align:center;font-weight:bold;}
+
+.qr{width:220px;display:block;margin:auto;cursor:pointer;}
 
 .remove-btn{
 background:red;color:white;border:none;
-padding:3px 8px;border-radius:4px;margin-left:5px;
+padding:4px 8px;border-radius:4px;
+margin-left:5px;
 }
 
 </style>
@@ -51,23 +56,29 @@ padding:3px 8px;border-radius:4px;margin-left:5px;
 
 <body>
 
-<div class="header">🍕 Royal Pizza Home Bansdih / रॉयल पिज़्ज़ा होम बांसडीह</div>
+<div class="header">
+🍕 Royal Pizza Home Bansdih / रॉयल पिज़्ज़ा होम
+</div>
 
 <div class="container">
 
-<form id="form" action="https://formsubmit.co/vimleshsingh64621@gmail.com" method="POST">
+<!-- CALL + WHATSAPP -->
+<button class="call-btn" onclick="callNow()">📞 Call Now / कॉल करें</button>
+<button class="whatsapp-btn" onclick="whatsappNow()">💬 WhatsApp / व्हाट्सएप</button>
+
+<form id="form" action="https://formsubmit.co/amitsingh3312509@gmail.com" method="POST">
 
 <h3>🍕 Pizza Menu / पिज़्ज़ा मेनू</h3>
 
 <select id="pizza">
-<option value="">Select Pizza / पिज़्ज़ा चुनें</option>
-<option value="120">Small Veg Pizza ₹120 / छोटा वेज पिज़्ज़ा</option>
-<option value="180">Medium Veg Pizza ₹180 / मीडियम वेज पिज़्ज़ा</option>
-<option value="250">Large Cheese Pizza ₹250 / बड़ा चीज़ पिज़्ज़ा</option>
-<option value="300">Special Paneer Pizza ₹300 / स्पेशल पनीर पिज़्ज़ा</option>
+<option value="">Select Pizza / चुनें</option>
+<option value="120">Small Veg Pizza ₹120 / छोटा</option>
+<option value="180">Medium Veg Pizza ₹180 / मीडियम</option>
+<option value="250">Large Cheese Pizza ₹250 / बड़ा</option>
+<option value="300">Paneer Pizza ₹300 / पनीर</option>
 </select>
 
-<input type="number" id="qty" value="1" placeholder="Quantity / मात्रा">
+<input type="number" id="qty" value="1">
 
 <button type="button" class="add-btn" onclick="addCart()">Add To Cart / जोड़ें</button>
 
@@ -81,12 +92,20 @@ padding:3px 8px;border-radius:4px;margin-left:5px;
 
 <h3>Customer Details / ग्राहक जानकारी</h3>
 
-<input name="Name" id="name" placeholder="Name / नाम" required>
-<input name="Mobile" id="mobile" placeholder="Mobile / मोबाइल" required>
+<input id="name" name="Name" placeholder="Name / नाम" required>
+<input id="mobile" name="Mobile" placeholder="Mobile / मोबाइल" required>
 
-<select name="Village" id="village" required onchange="showDetails()">
+<select id="village" name="Village" onchange="showDetails()" required>
 
 <option value="">Select Village / गांव चुनें</option>
+
+<option value="Bansdih / बांसडीह" data-time="20" data-charge="10">
+Bansdih / बांसडीह (20 min | ₹10)
+</option>
+
+<option value="Sultanpur / सुल्तानपुर" data-time="35" data-charge="30">
+Sultanpur / सुल्तानपुर (35 min | ₹30)
+</option>
 
 <option value="Kewtallia Kala / केवटलिया कला" data-time="30" data-charge="30">
 Kewtallia Kala / केवटलिया कला (30 min | ₹30)
@@ -96,59 +115,49 @@ Kewtallia Kala / केवटलिया कला (30 min | ₹30)
 Kewtallia Khurd / केवटलिया खुर्द (35 min | ₹35)
 </option>
 
-<option value="Aadar / आदर" data-time="25" data-charge="20">
-Aadar / आदर (25 min | ₹20)
-</option>
-
-<option value="Dadar / ददर" data-time="30" data-charge="25">
-Dadar / ददर (30 min | ₹25)
-</option>
-
-<option value="Dewdih / देउडीह" data-time="40" data-charge="40">
-Dewdih / देउडीह (40 min | ₹40)
-</option>
-
-<option value="Bansdih / बांसडीह" data-time="20" data-charge="10">
-Bansdih / बांसडीह (20 min | ₹10)
-</option>
-
-<option value="Vidya Bhawan Narayanpur / विद्या भवन नारायणपुर" data-time="25" data-charge="30">
-Vidya Bhawan Narayanpur / विद्या भवन नारायणपुर (25 min | ₹30)
-</option>
-
-<option value="Chhotaki Seriya / छोटकी सेरिया" data-time="25" data-charge="20">
-Chhotaki Seriya / छोटकी सेरिया (25 min | ₹20)
-</option>
-
-<option value="Sultanpur / सुल्तानपुर" data-time="35" data-charge="30">
-Sultanpur / सुल्तानपुर (35 min | ₹30)
-</option>
-
 </select>
 
 <p id="info"></p>
 
-<p class="note">⚠️ 50% Advance जरूरी है / compulsory</p>
+<p class="note">
+⚠️ 50% Advance जरूरी है / 50% advance compulsory
+</p>
 
 <h3>Payment / भुगतान</h3>
 
-<p style="text-align:center;">UPI: 7309277213@ibl</p>
+<img src="PUT_QR_LINK" class="qr" onclick="openUPI()">
 
-<input name="TransactionID" id="txn" placeholder="Transaction ID / ट्रांजैक्शन आईडी" required>
+<p style="text-align:center;">UPI: @ibl</p>
 
-<input type="hidden" name="FullReceipt" id="fullReceipt">
+<input id="txn" name="TransactionID" placeholder="Transaction ID / ट्रांजैक्शन आईडी" required>
 
-<button type="submit" class="submit-btn">Submit Order / ऑर्डर करें</button>
+<input type="hidden" id="fullReceipt" name="FullReceipt">
+
+<button type="submit" class="submit-btn">
+Submit Order / ऑर्डर करें
+</button>
 
 </form>
 
-<button class="download" onclick="downloadPDF()">Download Receipt / रसीद डाउनलोड</button>
+<button class="download" onclick="downloadPDF()">
+Download Receipt / रसीद डाउनलोड
+</button>
 
 <p id="msg" class="msg"></p>
 
 </div>
 
 <script>
+
+/* CALL */
+function callNow(){
+window.location.href="tel:7309277213";
+}
+
+/* WHATSAPP */
+function whatsappNow(){
+window.location.href="https://wa.me/917309277213";
+}
 
 let cart=[],total=0,delivery=0,time="";
 
@@ -159,35 +168,35 @@ let name=p.options[p.selectedIndex].text;
 let price=p.value;
 let q=document.getElementById("qty").value;
 
-if(price==""){alert("Select Pizza");return;}
+if(price==""){alert("Select Pizza / पिज़्ज़ा चुनें");return;}
 
 cart.push({name,price,q});
 total+=price*q;
 update();
 }
 
-/* UPDATE */
+/* UPDATE + REMOVE */
 function update(){
-document.getElementById("cart").innerHTML="";
-
-cart.forEach((c,index)=>{
-document.getElementById("cart").innerHTML+=
-c.name+" x"+c.q+" ₹"+(c.price*c.q)+
-" <button class='remove-btn' onclick='removeItem("+index+")'>X</button><br>";
+let html="";
+cart.forEach((c,i)=>{
+html+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+
+" <button class='remove-btn' onclick='removeItem("+i+")'>❌ Remove</button><br>";
 });
+
+document.getElementById("cart").innerHTML=html;
 
 document.getElementById("total").innerText=total;
 document.getElementById("delivery").innerText=delivery;
 
-let final=total+delivery;
-document.getElementById("final").innerText=final;
-document.getElementById("adv").innerText=Math.round(final/2);
+let f=total+delivery;
+document.getElementById("final").innerText=f;
+document.getElementById("adv").innerText=Math.round(f/2);
 }
 
 /* REMOVE */
-function removeItem(index){
-total -= cart[index].price * cart[index].q;
-cart.splice(index,1);
+function removeItem(i){
+total-=cart[i].price*cart[i].q;
+cart.splice(i,1);
 update();
 }
 
@@ -198,9 +207,44 @@ time=v.options[v.selectedIndex].getAttribute("data-time");
 delivery=v.options[v.selectedIndex].getAttribute("data-charge");
 
 document.getElementById("info").innerText=
-"Delivery Time / डिलीवरी समय: "+time+" min | Delivery Charge / चार्ज ₹"+delivery;
+"Delivery Time / डिलीवरी समय: "+time+
+" min | Delivery Charge / चार्ज ₹"+delivery;
 
 update();
+}
+
+/* UPI */
+function openUPI(){
+window.location.href="upi://pay?pa=7309277213@ibl&pn=RoyalPizzaHome&cu=INR";
+}
+
+/* WHATSAPP AUTO ORDER */
+function sendWhatsAppOrder(){
+
+let name=document.getElementById("name").value;
+let mobile=document.getElementById("mobile").value;
+let village=document.getElementById("village").value;
+
+let items="";
+cart.forEach(c=>{
+items+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+"%0A";
+});
+
+let final=total+delivery;
+let adv=Math.round(final/2);
+
+let msg=
+"🍕 *ROYAL PIZZA ORDER* %0A%0A"+
+"👤 Name: "+name+"%0A"+
+"📱 Mobile: "+mobile+"%0A"+
+"🏡 Village: "+village+"%0A%0A"+
+items+
+"%0A💰 Total: ₹"+final+
+"%0A💵 Advance: ₹"+adv+
+"%0A🚚 Delivery Charge: ₹"+delivery+
+"%0A⏱️ Time: "+time+" min";
+
+window.open("https://wa.me/917309277213?text="+msg,"_blank");
 }
 
 /* SUBMIT */
@@ -208,23 +252,30 @@ document.getElementById("form").addEventListener("submit",function(e){
 
 e.preventDefault();
 
+/* WhatsApp */
+sendWhatsAppOrder();
+
 let v=document.getElementById("village");
 let village=v.value;
-let time=v.options[v.selectedIndex].getAttribute("data-time");
-let charge=v.options[v.selectedIndex].getAttribute("data-charge");
 
 let d=new Date();
 
-/* EMAIL */
+let items="";
+cart.forEach(c=>{
+items+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+"\n";
+});
+
 let final=total+delivery;
 let adv=Math.round(final/2);
 
+/* EMAIL + PDF SAME */
 let fullData =
 "ROYAL PIZZA RECEIPT\n\n"+
 "Name / नाम: "+document.getElementById("name").value+"\n"+
 "Mobile / मोबाइल: "+document.getElementById("mobile").value+"\n"+
 "Village / गांव: "+village+"\n\n"+
-"Total / कुल: ₹"+final+
+items+
+"\nTotal / कुल: ₹"+final+
 "\nAdvance / एडवांस: ₹"+adv+
 "\nDelivery Charge / चार्ज: ₹"+delivery+
 "\nTxn ID: "+document.getElementById("txn").value+
@@ -235,15 +286,13 @@ let fullData =
 
 document.getElementById("fullReceipt").value=fullData;
 
-/* MESSAGE */
-document.getElementById("msg").innerText =
-"✅ Order Submitted / ऑर्डर सफल\n\n" +
-"🏡 Village / गांव: "+village+"\n\n" +
-"⏱️ Delivery in "+time+" minutes / समय\n\n" +
-"💰 Delivery Charge ₹"+charge+"\n\n" +
-"🙏 Thank You / धन्यवाद";
+document.getElementById("msg").innerText=
+"✅ Order Submitted / ऑर्डर सफल\n\n"+
+"🏡 "+village+"\n"+
+"⏱️ "+time+" min\n"+
+"💰 Delivery Charge ₹"+delivery;
 
-/* 5 sec */
+/* 5 sec delay */
 setTimeout(()=>{ this.submit(); },5000);
 
 });
@@ -254,9 +303,8 @@ function downloadPDF(){
 const {jsPDF}=window.jspdf;
 let pdf=new jsPDF();
 
-let d=new Date();
+let text=document.getElementById("fullReceipt").value;
 
-/* BORDER */
 pdf.setDrawColor(255,105,180);
 pdf.setLineWidth(3);
 pdf.rect(5,5,200,287);
@@ -265,9 +313,15 @@ pdf.setDrawColor(0,150,255);
 pdf.setLineWidth(1);
 pdf.rect(10,10,190,277);
 
+pdf.setTextColor(255,182,193);
+pdf.setFontSize(22);
+pdf.text("Royal Pizza Home",20,140,{angle:45});
+
+pdf.setTextColor(0,0,0);
 pdf.setFontSize(12);
-pdf.text("Delivery Charge: ₹"+delivery,20,60);
-pdf.text("Day: "+d.toLocaleDateString('en-US',{weekday:'long'}),20,70);
+
+let lines=pdf.splitTextToSize(text,180);
+pdf.text(lines,20,20);
 
 pdf.save("Receipt.pdf");
 
@@ -276,4 +330,4 @@ pdf.save("Receipt.pdf");
 </script>
 
 </body>
- </html>
+                       </html>
