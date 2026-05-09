@@ -1,53 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
-<title>Royal Pizza Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Royal Pizza Home Bansdih</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 
-body{margin:0;font-family:Arial;background:#f5f5f5;}
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+}
 
 .header{
-background:#ff3b3b;color:white;text-align:center;
-padding:15px;font-size:22px;font-weight:bold;
+background:#ff3b3b;
+color:white;
+padding:15px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
 }
 
 .container{
-max-width:700px;margin:20px auto;background:white;
-padding:20px;border-radius:10px;
+max-width:700px;
+margin:20px auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 input,select{
-width:100%;padding:10px;margin:6px 0;
+width:100%;
+padding:10px;
+margin-top:8px;
+margin-bottom:8px;
+border:1px solid #ccc;
+border-radius:5px;
 }
 
 button{
-width:100%;padding:12px;margin-top:6px;
-border:none;border-radius:6px;color:white;
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+margin-top:8px;
+color:white;
 }
 
-.add-btn{background:#ff4da6;}
-.submit-btn{background:black;}
-.download{background:#ff4da6;}
-.call-btn{background:#28a745;}
-.whatsapp-btn{background:#25D366;}
+.add-btn{
+background:#ff4da6;
+}
 
-.cart{background:#eee;padding:10px;margin-top:10px;}
+.submit-btn{
+background:black;
+}
 
-.note{color:red;text-align:center;font-weight:bold;}
+.download-btn{
+background:#ff4da6;
+}
 
-.msg{color:green;text-align:center;font-weight:bold;}
+.call-btn{
+background:#28a745;
+}
 
-.qr{width:220px;display:block;margin:auto;cursor:pointer;}
+.cart{
+background:#f1f1f1;
+padding:10px;
+border-radius:6px;
+margin-top:10px;
+}
 
 .remove-btn{
-background:red;color:white;border:none;
-padding:4px 8px;border-radius:4px;
+background:red;
+padding:4px 8px;
+border:none;
+color:white;
+border-radius:4px;
 margin-left:5px;
+cursor:pointer;
+}
+
+.note{
+color:red;
+font-weight:bold;
+text-align:center;
+}
+
+.msg{
+color:green;
+font-weight:bold;
+text-align:center;
+margin-top:10px;
+}
+
+.qr{
+width:220px;
+display:block;
+margin:auto;
+cursor:pointer;
 }
 
 </style>
@@ -57,67 +115,99 @@ margin-left:5px;
 <body>
 
 <div class="header">
-🍕 Royal Pizza Home Bansdih / रॉयल पिज़्ज़ा होम
+🍕 Royal Pizza Home Bansdih / रॉयल पिज़्ज़ा होम बांसडीह
 </div>
 
 <div class="container">
 
-<!-- CALL + WHATSAPP -->
-<button class="call-btn" onclick="callNow()">📞 Call Now / कॉल करें</button>
-<button class="whatsapp-btn" onclick="whatsappNow()">💬 WhatsApp / व्हाट्सएप</button>
+<button class="call-btn" onclick="callNow()">
+📞 Call Now / कॉल करें
+</button>
 
-<form id="form" action="https://formsubmit.co/amitsingh3312509@gmail.com" method="POST">
+<form id="form" action="https://formsubmit.co/YOUR-EMAIL@gmail.com" method="POST">
 
 <h3>🍕 Pizza Menu / पिज़्ज़ा मेनू</h3>
 
 <select id="pizza">
-<option value="">Select Pizza / चुनें</option>
-<option value="120">Small Veg Pizza ₹120 / छोटा</option>
-<option value="180">Medium Veg Pizza ₹180 / मीडियम</option>
-<option value="250">Large Cheese Pizza ₹250 / बड़ा</option>
-<option value="300">Paneer Pizza ₹300 / पनीर</option>
+
+<option value="">Select Pizza / पिज़्ज़ा चुनें</option>
+
+<option value="120">
+Small Veg Pizza ₹120 / छोटा वेज पिज़्ज़ा
+</option>
+
+<option value="180">
+Medium Veg Pizza ₹180 / मीडियम वेज पिज़्ज़ा
+</option>
+
+<option value="250">
+Large Cheese Pizza ₹250 / बड़ा चीज़ पिज़्ज़ा
+</option>
+
+<option value="300">
+Paneer Pizza ₹300 / पनीर पिज़्ज़ा
+</option>
+
 </select>
 
-<input type="number" id="qty" value="1">
+<input type="number" id="qty" value="1" placeholder="Quantity / मात्रा">
 
-<button type="button" class="add-btn" onclick="addCart()">Add To Cart / जोड़ें</button>
+<button type="button" class="add-btn" onclick="addCart()">
+Add To Cart / जोड़ें
+</button>
 
 <div class="cart">
+
 <div id="cart"></div>
+
 <p>Total / कुल ₹ <span id="total">0</span></p>
-<p>Delivery Charge / डिलीवरी चार्ज ₹ <span id="delivery">0</span></p>
-<p>Final / कुल भुगतान ₹ <span id="final">0</span></p>
-<p>Advance / एडवांस ₹ <span id="adv">0</span></p>
+
+<p>
+Delivery Charge / डिलीवरी चार्ज ₹
+<span id="delivery">0</span>
+</p>
+
+<p>
+Final Amount / कुल भुगतान ₹
+<span id="final">0</span>
+</p>
+
+<p>
+Advance 50% / एडवांस ₹
+<span id="advance">0</span>
+</p>
+
 </div>
 
 <h3>Customer Details / ग्राहक जानकारी</h3>
 
-<input id="name" name="Name" placeholder="Name / नाम" required>
-<input id="mobile" name="Mobile" placeholder="Mobile / मोबाइल" required>
+<input type="text" id="name" name="Name" placeholder="Name / नाम" required>
 
-<select id="village" name="Village" onchange="showDetails()" required>
+<input type="text" id="mobile" name="Mobile" placeholder="Mobile / मोबाइल" required>
+
+<select id="village" name="Village" onchange="showVillageInfo()" required>
 
 <option value="">Select Village / गांव चुनें</option>
 
-<option value="Bansdih / बांसडीह" data-time="20" data-charge="10">
+<option value="Bansdih" data-time="20" data-charge="10">
 Bansdih / बांसडीह (20 min | ₹10)
 </option>
 
-<option value="Sultanpur / सुल्तानपुर" data-time="35" data-charge="30">
+<option value="Sultanpur" data-time="35" data-charge="30">
 Sultanpur / सुल्तानपुर (35 min | ₹30)
 </option>
 
-<option value="Kewtallia Kala / केवटलिया कला" data-time="30" data-charge="30">
+<option value="Kewtallia Kala" data-time="30" data-charge="30">
 Kewtallia Kala / केवटलिया कला (30 min | ₹30)
 </option>
 
-<option value="Kewtallia Khurd / केवटलिया खुर्द" data-time="35" data-charge="35">
+<option value="Kewtallia Khurd" data-time="35" data-charge="35">
 Kewtallia Khurd / केवटलिया खुर्द (35 min | ₹35)
 </option>
 
 </select>
 
-<p id="info"></p>
+<p id="villageInfo"></p>
 
 <p class="note">
 ⚠️ 50% Advance जरूरी है / 50% advance compulsory
@@ -125,13 +215,16 @@ Kewtallia Khurd / केवटलिया खुर्द (35 min | ₹35)
 
 <h3>Payment / भुगतान</h3>
 
-<img src="PUT_QR_LINK" class="qr" onclick="openUPI()">
+<img src="PUT_QR_LINK_HERE" class="qr" onclick="openUPI()">
 
-<p style="text-align:center;">UPI: @ibl</p>
+<p style="text-align:center;">
+UPI ID: 7309277213@ibl
+</p>
 
-<input id="txn" name="TransactionID" placeholder="Transaction ID / ट्रांजैक्शन आईडी" required>
+<input type="text" id="txn" name="TransactionID"
+placeholder="Transaction ID / ट्रांजैक्शन आईडी" required>
 
-<input type="hidden" id="fullReceipt" name="FullReceipt">
+<input type="hidden" id="receiptData" name="Receipt">
 
 <button type="submit" class="submit-btn">
 Submit Order / ऑर्डर करें
@@ -139,195 +232,239 @@ Submit Order / ऑर्डर करें
 
 </form>
 
-<button class="download" onclick="downloadPDF()">
+<button class="download-btn" onclick="downloadPDF()">
 Download Receipt / रसीद डाउनलोड
 </button>
 
-<p id="msg" class="msg"></p>
+<p class="msg" id="msg"></p>
 
 </div>
 
 <script>
 
-/* CALL */
 function callNow(){
 window.location.href="tel:7309277213";
 }
 
-/* WHATSAPP */
-function whatsappNow(){
-window.location.href="https://wa.me/917309277213";
-}
-
-let cart=[],total=0,delivery=0,time="";
-
-/* ADD */
-function addCart(){
-let p=document.getElementById("pizza");
-let name=p.options[p.selectedIndex].text;
-let price=p.value;
-let q=document.getElementById("qty").value;
-
-if(price==""){alert("Select Pizza / पिज़्ज़ा चुनें");return;}
-
-cart.push({name,price,q});
-total+=price*q;
-update();
-}
-
-/* UPDATE + REMOVE */
-function update(){
-let html="";
-cart.forEach((c,i)=>{
-html+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+
-" <button class='remove-btn' onclick='removeItem("+i+")'>❌ Remove</button><br>";
-});
-
-document.getElementById("cart").innerHTML=html;
-
-document.getElementById("total").innerText=total;
-document.getElementById("delivery").innerText=delivery;
-
-let f=total+delivery;
-document.getElementById("final").innerText=f;
-document.getElementById("adv").innerText=Math.round(f/2);
-}
-
-/* REMOVE */
-function removeItem(i){
-total-=cart[i].price*cart[i].q;
-cart.splice(i,1);
-update();
-}
-
-/* VILLAGE */
-function showDetails(){
-let v=document.getElementById("village");
-time=v.options[v.selectedIndex].getAttribute("data-time");
-delivery=v.options[v.selectedIndex].getAttribute("data-charge");
-
-document.getElementById("info").innerText=
-"Delivery Time / डिलीवरी समय: "+time+
-" min | Delivery Charge / चार्ज ₹"+delivery;
-
-update();
-}
-
-/* UPI */
 function openUPI(){
-window.location.href="upi://pay?pa=7309277213@ibl&pn=RoyalPizzaHome&cu=INR";
+window.location.href=
+"upi://pay?pa=7309277213@ibl&pn=RoyalPizzaHome&cu=INR";
 }
 
-/* WHATSAPP AUTO ORDER */
-function sendWhatsAppOrder(){
+let cart = [];
+let total = 0;
+let deliveryCharge = 0;
+let deliveryTime = "";
 
-let name=document.getElementById("name").value;
-let mobile=document.getElementById("mobile").value;
-let village=document.getElementById("village").value;
+function addCart(){
 
-let items="";
-cart.forEach(c=>{
-items+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+"%0A";
+let pizza = document.getElementById("pizza");
+let pizzaName = pizza.options[pizza.selectedIndex].text;
+let pizzaPrice = Number(pizza.value);
+
+let qty = Number(document.getElementById("qty").value);
+
+if(pizzaPrice == 0){
+alert("Select Pizza / पिज़्ज़ा चुनें");
+return;
+}
+
+cart.push({
+name:pizzaName,
+price:pizzaPrice,
+qty:qty
 });
 
-let final=total+delivery;
-let adv=Math.round(final/2);
+total += pizzaPrice * qty;
 
-let msg=
-"🍕 *ROYAL PIZZA ORDER* %0A%0A"+
-"👤 Name: "+name+"%0A"+
-"📱 Mobile: "+mobile+"%0A"+
-"🏡 Village: "+village+"%0A%0A"+
-items+
-"%0A💰 Total: ₹"+final+
-"%0A💵 Advance: ₹"+adv+
-"%0A🚚 Delivery Charge: ₹"+delivery+
-"%0A⏱️ Time: "+time+" min";
+updateCart();
 
-window.open("https://wa.me/917309277213?text="+msg,"_blank");
 }
 
-/* SUBMIT */
-document.getElementById("form").addEventListener("submit",function(e){
+function updateCart(){
+
+let cartHTML = "";
+
+cart.forEach((item,index)=>{
+
+cartHTML += `
+${item.name} x${item.qty}
+₹${item.price * item.qty}
+
+<button class="remove-btn"
+onclick="removeItem(${index})">
+❌ Remove
+</button>
+
+<br><br>
+`;
+
+});
+
+document.getElementById("cart").innerHTML = cartHTML;
+
+document.getElementById("total").innerText = total;
+
+document.getElementById("delivery").innerText = deliveryCharge;
+
+let finalAmount = total + Number(deliveryCharge);
+
+document.getElementById("final").innerText = finalAmount;
+
+document.getElementById("advance").innerText =
+Math.round(finalAmount / 2);
+
+}
+
+function removeItem(index){
+
+total -= cart[index].price * cart[index].qty;
+
+cart.splice(index,1);
+
+updateCart();
+
+}
+
+function showVillageInfo(){
+
+let village = document.getElementById("village");
+
+deliveryTime =
+village.options[village.selectedIndex]
+.getAttribute("data-time");
+
+deliveryCharge =
+village.options[village.selectedIndex]
+.getAttribute("data-charge");
+
+document.getElementById("villageInfo").innerText =
+
+"🚚 Delivery Time / डिलीवरी समय: "
++ deliveryTime +
+" min | Delivery Charge / चार्ज ₹"
++ deliveryCharge;
+
+updateCart();
+
+}
+
+document.getElementById("form")
+.addEventListener("submit",function(e){
 
 e.preventDefault();
 
-/* WhatsApp */
-sendWhatsAppOrder();
+if(cart.length == 0){
+alert("⚠️ Add Pizza First");
+return;
+}
 
-let v=document.getElementById("village");
-let village=v.value;
+let date = new Date();
 
-let d=new Date();
+let items = "";
 
-let items="";
-cart.forEach(c=>{
-items+=c.name+" x"+c.q+" ₹"+(c.price*c.q)+"\n";
-});
+cart.forEach(item=>{
 
-let final=total+delivery;
-let adv=Math.round(final/2);
-
-/* EMAIL + PDF SAME */
-let fullData =
-"ROYAL PIZZA RECEIPT\n\n"+
-"Name / नाम: "+document.getElementById("name").value+"\n"+
-"Mobile / मोबाइल: "+document.getElementById("mobile").value+"\n"+
-"Village / गांव: "+village+"\n\n"+
-items+
-"\nTotal / कुल: ₹"+final+
-"\nAdvance / एडवांस: ₹"+adv+
-"\nDelivery Charge / चार्ज: ₹"+delivery+
-"\nTxn ID: "+document.getElementById("txn").value+
-"\nDate: "+d.toLocaleDateString()+
-"\nDay: "+d.toLocaleDateString('en-US',{weekday:'long'})+
-"\nTime: "+d.toLocaleTimeString()+
-"\nDelivery Time: "+time+" min";
-
-document.getElementById("fullReceipt").value=fullData;
-
-document.getElementById("msg").innerText=
-"✅ Order Submitted / ऑर्डर सफल\n\n"+
-"🏡 "+village+"\n"+
-"⏱️ "+time+" min\n"+
-"💰 Delivery Charge ₹"+delivery;
-
-/* 5 sec delay */
-setTimeout(()=>{ this.submit(); },5000);
+items +=
+item.name +
+" x" +
+item.qty +
+" ₹" +
+(item.price * item.qty)
++ "\n";
 
 });
 
-/* PDF */
+let finalAmount = total + Number(deliveryCharge);
+
+let advance =
+Math.round(finalAmount / 2);
+
+let receipt =
+
+"🍕 ROYAL PIZZA HOME 🍕\n\n"+
+
+"Name / नाम: " +
+document.getElementById("name").value + "\n"+
+
+"Mobile / मोबाइल: " +
+document.getElementById("mobile").value + "\n"+
+
+"Village / गांव: " +
+document.getElementById("village").value + "\n\n"+
+
+items +
+
+"\nTotal / कुल: ₹" +
+finalAmount +
+
+"\nAdvance / एडवांस: ₹" +
+advance +
+
+"\nDelivery Charge / चार्ज: ₹" +
+deliveryCharge +
+
+"\nTransaction ID: " +
+document.getElementById("txn").value +
+
+"\nDate: " +
+date.toLocaleDateString() +
+
+"\nTime: " +
+date.toLocaleTimeString() +
+
+"\nDelivery Time: " +
+deliveryTime + " min";
+
+document.getElementById("receiptData").value = receipt;
+
+document.getElementById("msg").innerText =
+"✅ Order Submitted Successfully!\n" +
+"⏱️ Delivery Time: " +
+deliveryTime +
+" min";
+
+setTimeout(()=>{
+this.submit();
+},5000);
+
+});
+
 function downloadPDF(){
 
-const {jsPDF}=window.jspdf;
-let pdf=new jsPDF();
+let text =
+document.getElementById("receiptData").value;
 
-let text=document.getElementById("fullReceipt").value;
+if(text==""){
+alert("⚠️ Submit order first");
+return;
+}
+
+const { jsPDF } = window.jspdf;
+
+let pdf = new jsPDF();
 
 pdf.setDrawColor(255,105,180);
 pdf.setLineWidth(3);
 pdf.rect(5,5,200,287);
 
-pdf.setDrawColor(0,150,255);
-pdf.setLineWidth(1);
-pdf.rect(10,10,190,277);
+pdf.setFontSize(18);
+pdf.setTextColor(255,20,147);
 
-pdf.setTextColor(255,182,193);
-pdf.setFontSize(22);
-pdf.text("Royal Pizza Home",20,140,{angle:45});
+pdf.text("Royal Pizza Home Bansdih",25,20);
 
-pdf.setTextColor(0,0,0);
 pdf.setFontSize(12);
+pdf.setTextColor(0,0,0);
 
-let lines=pdf.splitTextToSize(text,180);
-pdf.text(lines,20,20);
+let lines = pdf.splitTextToSize(text,180);
 
-pdf.save("Receipt.pdf");
+pdf.text(lines,15,40);
+
+pdf.save("RoyalPizzaReceipt.pdf");
 
 }
 
 </script>
 
 </body>
-                       </html>
+  </html>
