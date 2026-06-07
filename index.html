@@ -1,7 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<div class="royal-scroll">
+  <div class="royal-scroll-text">
+    🍕 Royal Pizza Home, Bansdih Ballia में आपका स्वागत है | Welcome to Royal Pizza Home, Bansdih Ballia 🍕 |
+    🚚 फास्ट होम डिलीवरी | Fast Home Delivery |
+    🍔 Burger | 🍕 Pizza | 🥟 Momos | 🌯 Roll | 🍟 French Fries |
+    ⭐ स्वाद में बेस्ट | Best in Taste |
+    📞 Order Now: 63071 77262,80521 14997,7309277213
+  </div>
+</div>
 
+<style>
+.royal-scroll{
+    width:100%;
+    background:linear-gradient(90deg,#d32f2f,#ff9800,#d32f2f);
+    color:#fff;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:12px 0;
+    font-size:18px;
+    font-weight:700;
+    border-top:3px solid #fff;
+    border-bottom:3px solid #fff;
+    box-shadow:0 3px 10px rgba(0,0,0,0.3);
+}
+
+.royal-scroll-text{
+    display:inline-block;
+    padding-left:100%;
+    animation:royalScroll 20s linear infinite;
+}
+
+.royal-scroll:hover .royal-scroll-text{
+    animation-play-state:paused;
+}
+
+@keyframes royalScroll{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
+</style>
+</div>
+
+<style>
+.scroll-container{
+    width:100%;
+    overflow:hidden;
+    background:#ff9800;
+    color:white;
+    padding:12px 0;
+    font-size:20px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.scroll-text{
+    display:inline-block;
+    padding-left:100%;
+    animation:scroll 15s linear infinite;
+}
+
+@keyframes scroll{
+    0%{
+        transform:translateX(0);
+    }
+    100%{
+        transform:translateX(-100%);
+    }
+}
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -211,7 +283,45 @@ value="🍕 New Royal Pizza Order">
 <option value="">
 Select Menu Item / मेनू आइटम चुनें
 <!-- VEGGIE DELIGHT / वेजी डिलाइट -->
+<optgroup label="BURGER / बर्गर">
 
+<option value="Spicy Veg Burger|40">
+Spicy Veg Burger / स्पाइसी वेज बर्गर - ₹40
+</option>
+
+<option value="Cheese Burger|65">
+Cheese Burger / चीज़ बर्गर - ₹65
+</option>
+
+<option value="Mushroom Burger|70">
+Mushroom Burger / मशरूम बर्गर - ₹70
+</option>
+
+<option value="Double Cheese Burger|70">
+Double Cheese Burger / डबल चीज़ बर्गर - ₹70
+</option>
+
+<option value="Paneer Burger|70">
+Paneer Burger / पनीर बर्गर - ₹70
+</option>
+
+<option value="Veg Chilli Cheese Burger|90">
+Veg Chilli Cheese Burger / वेज चिली चीज़ बर्गर - ₹90
+</option>
+
+<option value="Makhani Paneer Burger|90">
+Makhani Paneer Burger / मखनी पनीर बर्गर - ₹90
+</option>
+
+<option value="Szechuan Paneer Burger|90">
+Szechuan Paneer Burger / शेज़वान पनीर बर्गर - ₹90
+</option>
+
+<option value="Achari Paneer Burger|90">
+Achari Paneer Burger / अचारी पनीर बर्गर - ₹90
+</option>
+
+</optgroup>
 <option value="Fresh Veggie Regular|130">Fresh Veggie Regular / फ्रेश वेजी रेगुलर - ₹130</option>
 <option value="Fresh Veggie Medium|240">Fresh Veggie Medium / फ्रेश वेजी मीडियम - ₹240</option>
 <option value="Fresh Veggie Large|360">Fresh Veggie Large / फ्रेश वेजी लार्ज - ₹360</option>
@@ -391,6 +501,21 @@ Select Village / गाँव चुनें
 <option value="Bansdih|20|30 Minutes">
 Bansdih / बांसडीह - ₹20 - 30 Minutes
 </option>
+<option value="Kakarkunda|45|50 Minutes">
+Kakarkunda / ककरकुंडा - ₹45 - 50 Minutes
+</option>
+
+<option value="Duhi Mushi|45|50 Minutes">
+Duhi Mushi / दुही मुशी - ₹45 - 50 Minutes
+</option>
+
+<option value="Janki Chhapra|45|50 Minutes">
+Janki Chhapra / जानकी छपरा - ₹45 - 50 Minutes
+</option>
+
+<option value="Hardattpur|30|50 Minutes">
+Hardattpur / हरदत्तपुर - ₹30 - 50 Minutes
+</option>
 
 <option value="Dewdih|35|40-45 Minutes">
 Dewdih / देउडीह - ₹35 - 40-45 Minutes
@@ -453,11 +578,7 @@ Badasari / बड़ासरी - ₹40 - 40-45 Minutes
 </option>
 
 <option value="Rajagaaw|40|40-45 Minutes">
-Rajagaaw / राजागांव - ₹40 - 40-45 Minutes
-</option>
-
-<option value="Kharauni|35|40-45 Minutes">
-Kharauni / खरौनी - ₹35 - 40-45 Minutes
+RajagaawKharauni / राजागांवखरौनी - ₹40 - 40-45 Minutes
 </option>
 
 <option value="Chhotaki Seriya|35|40-45 Minutes">
